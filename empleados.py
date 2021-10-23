@@ -8,7 +8,7 @@ def app():
     ventana_login.title("Acceso a la cuenta")
     ventana_login.geometry("300x250")
     Label(ventana_login, text="Introduzca nombre de usuario y contraseña").pack()
-    Label(ventana_login, text="").pack()
+#    Label(ventana_login, text="").pack()
  
     global verifica_usuario
     global verifica_clave
@@ -59,6 +59,28 @@ def registrar_admin():
     ventana_registrar_admin.grab_set()
     ventana_registrar_admin.title("Registrar administrador")
     ## agregar un campo user, otro password y un boton de registro
+    global verifica_usuario_nuevo
+    global verifica_clave_nuevo
+ 
+    verifica_usuario_nuevo = StringVar()
+    verifica_clave_nuevo = StringVar()
+ 
+    global entrada_registro_usuario
+    global entrada_registro_clave
+ 
+    Label(ventana_registrar_admin, text="Introduzca nombre de usuario y contraseña para administrador nuevo").pack()
+    Label(ventana_registrar_admin, text="Nombre usuario * ").pack()
+    entrada_registro_usuario = Entry(ventana_registrar_admin, textvariable=verifica_usuario_nuevo)
+    entrada_registro_usuario.pack()
+    Label(ventana_registrar_admin, text="Contraseña * ").pack()
+    entrada_registro_clave = Entry(ventana_registrar_admin, textvariable=verifica_clave_nuevo, show= '*')
+    entrada_registro_clave.pack()
+    Button(ventana_registrar_admin, text="Registrar", width=10, height=1, command = registrar).pack()
+
+## funcion para registrar nuevo administrador
+
+def registrar():
+    print("registrado")
 
 def gestionar_empleados():
     global ventana_gestionar_empleados
