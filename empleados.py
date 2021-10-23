@@ -144,22 +144,35 @@ def agregar_empleados():
     entrada_area_empleado.pack()
 
     Button(ventana_agregar_empleados, text="Agregar empleado", height="2", width="30", command = agregar_empleado).pack()
-    # tree = ttk.Treeview(height=10, columns=("Nombre","Apellido","DNI","Activo", "Suspendido"))
-    # tree.heading('#0', text="Nombre")
-    # tree.heading('#1', text="Apellido")
-    # tree.heading('#2', text="DNI")
-    # tree.heading('#3', text="Activo")
-    # tree.heading('#4', text="Suspendido")
 
-    arbol = ttk.Treeview(ventana_agregar_empleados,columns=("ID", "Nombre", "Apellido", "DNI", "Area"))
-    arbol.insert("", END, text="", values=("5", "Jorge","Ramirez", "14567362", "CNC")) ## empleado hardcodeado para mostrar
-    arbol.heading("#0",text="")
-    arbol.heading("#1", text="ID")
-    arbol.heading("#2", text="Nombre")
-    arbol.heading("#3", text="Apellido")
-    arbol.heading("#4", text="DNI")
-    arbol.heading("#5", text="Area")
-    arbol.pack()
+    # arbol = ttk.Treeview(ventana_agregar_empleados,columns=("ID", "Nombre", "Apellido", "DNI", "Area"))
+    # arbol.insert("", END, text="", values=("5", "Jorge","Ramirez", "14567362", "CNC")) ## empleado hardcodeado para mostrar
+    # arbol.heading("#0",text="")
+    # arbol.heading("#1", text="ID")
+    # arbol.heading("#2", text="Nombre")
+    # arbol.heading("#3", text="Apellido")
+    # arbol.heading("#4", text="DNI")
+    # arbol.heading("#5", text="Area")
+    # arbol.pack()
+
+    tv = ttk.Treeview(ventana_agregar_empleados)
+    tv['columns']=('ID', 'Nombre', 'Apellido', 'DNI', 'Area')
+    tv.column('#0', width=0, stretch=NO)
+    tv.column('ID', anchor=CENTER, width=80)
+    tv.column('Nombre', anchor=CENTER, width=80)
+    tv.column('Apellido', anchor=CENTER, width=80)
+    tv.column('DNI', anchor=CENTER, width=120)
+    tv.column('Area', anchor=CENTER, width=120)
+
+    tv.heading('#0', text='', anchor=CENTER)
+    tv.heading('ID', text='ID', anchor=CENTER)
+    tv.heading('Nombre', text='Nombre', anchor=CENTER)
+    tv.heading('Apellido', text='Apellido', anchor=CENTER)
+    tv.heading('DNI', text='DNI', anchor=CENTER)
+    tv.heading('Area', text='Area', anchor=CENTER)
+
+    tv.insert(parent='', index=0, iid=0, text='', values=('45','Miguel','Rodriguez', '14243531', 'Operario de CNC')) # empleado hardcodeado para mostrar
+    tv.pack()
 
 ## funcion para agregar empleados
 
