@@ -22,11 +22,11 @@ def app():
     Label(ventana_login, text="Nombre usuario * ").pack()
     entrada_login_usuario = Entry(ventana_login, textvariable=verifica_usuario)
     entrada_login_usuario.pack()
-    Label(ventana_login, text="").pack()
+#    Label(ventana_login, text="").pack()
     Label(ventana_login, text="Contraseña * ").pack()
     entrada_login_clave = Entry(ventana_login, textvariable=verifica_clave, show= '*')
     entrada_login_clave.pack()
-    Label(ventana_login, text="").pack()
+#    Label(ventana_login, text="").pack()
     Button(ventana_login, text="Acceder", width=10, height=1, command = verifica_login).pack()
     ventana_login.mainloop()
 
