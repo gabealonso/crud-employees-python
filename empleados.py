@@ -47,7 +47,8 @@ def ingresar_pantalla_principal():
     pestas_color="DarkGrey"
     Label(ventana_gestor, text="Menu principal", bg="LightGreen", width="300", height="2").pack()
     Button(ventana_gestor, text="Agregar administrador", height="2", width="30", bg=pestas_color, command = registrar_admin).pack()
-    Button(ventana_gestor, text="Gestionar empleados", height="2", width="30", bg=pestas_color, command = gestionar_empleados).pack()
+    Button(ventana_gestor, text="Agregar empleados", height="2", width="30", bg=pestas_color, command = agregar_empleados).pack()
+    Button(ventana_gestor, text="Modificar empleado", height="2", width="30", bg=pestas_color, command = modificar_empleados).pack()
     Button(ventana_gestor, text="Desactivar empleado", height="2", width="30", bg=pestas_color, command = suspender_empleados).pack()
 
 ## Pantalla agregar admin    
@@ -81,26 +82,68 @@ def registrar_admin():
 def registrar():
     print("registrado")
 
-def gestionar_empleados():
-    global ventana_gestionar_empleados
-    ventana_gestionar_empleados = Toplevel(ventana_gestor)
-    ventana_gestionar_empleados.geometry("1250x640")
-    ventana_gestionar_empleados.grab_set()
-    ventana_gestionar_empleados.title("Agregar empleado")
-        
-    Label(ventana_gestionar_empleados, text="Nombre ").pack()
-    entrada_nombre_empleado = Entry(ventana_gestionar_empleados)
+## pantalla modificar empleados
+
+def modificar_empleados():
+    global ventana_modificar_empleados
+    ventana_modificar_empleados = Toplevel(ventana_gestor)
+    ventana_modificar_empleados.geometry("1250x640")
+    ventana_modificar_empleados.grab_set()
+    ventana_modificar_empleados.title("Modificar empleado")
+    
+    Label(ventana_modificar_empleados, text="ID ").pack()
+    entrada_id_empleado = Entry(ventana_modificar_empleados)
+    entrada_id_empleado.pack()
+
+    Label(ventana_modificar_empleados, text="Nombre ").pack()
+    entrada_nombre_empleado = Entry(ventana_modificar_empleados)
     entrada_nombre_empleado.pack()
 
-    Label(ventana_gestionar_empleados, text="Apellido").pack()
-    entrada_apellido_empleado = Entry(ventana_gestionar_empleados)
+    Label(ventana_modificar_empleados, text="Apellido").pack()
+    entrada_apellido_empleado = Entry(ventana_modificar_empleados)
     entrada_apellido_empleado.pack()
 
-    Label(ventana_gestionar_empleados, text="DNI").pack()
-    entrada_dni_empleado = Entry(ventana_gestionar_empleados)
+    Label(ventana_modificar_empleados, text="DNI").pack()
+    entrada_dni_empleado = Entry(ventana_modificar_empleados)
     entrada_dni_empleado.pack()
 
-    Button(ventana_gestionar_empleados, text="Desactivar empleado", height="2", width="30", command = agregar_empleado).pack()
+    Label(ventana_modificar_empleados, text="Area").pack()
+    entrada_area_empleado = Entry(ventana_modificar_empleados)
+    entrada_area_empleado.pack()
+
+    Button(ventana_modificar_empleados, text="Modificar empleado", height="2", width="30", command = modificar_empleado).pack()
+
+## funcion para modificar empleado
+
+def modificar_empleado():
+    print("Empleado modificado")
+
+# pantalla agregar empleados
+
+def agregar_empleados():
+    global ventana_agregar_empleados
+    ventana_agregar_empleados = Toplevel(ventana_gestor)
+    ventana_agregar_empleados.geometry("1250x640")
+    ventana_agregar_empleados.grab_set()
+    ventana_agregar_empleados.title("Agregar empleado")
+        
+    Label(ventana_agregar_empleados, text="Nombre ").pack()
+    entrada_nombre_empleado = Entry(ventana_agregar_empleados)
+    entrada_nombre_empleado.pack()
+
+    Label(ventana_agregar_empleados, text="Apellido").pack()
+    entrada_apellido_empleado = Entry(ventana_agregar_empleados)
+    entrada_apellido_empleado.pack()
+
+    Label(ventana_agregar_empleados, text="DNI").pack()
+    entrada_dni_empleado = Entry(ventana_agregar_empleados)
+    entrada_dni_empleado.pack()
+
+    Label(ventana_agregar_empleados, text="Area").pack()
+    entrada_area_empleado = Entry(ventana_agregar_empleados)
+    entrada_area_empleado.pack()
+
+    Button(ventana_agregar_empleados, text="Agregar empleado", height="2", width="30", command = agregar_empleado).pack()
     # tree = ttk.Treeview(height=10, columns=("Nombre","Apellido","DNI","Activo", "Suspendido"))
     # tree.heading('#0', text="Nombre")
     # tree.heading('#1', text="Apellido")
@@ -108,7 +151,7 @@ def gestionar_empleados():
     # tree.heading('#3', text="Activo")
     # tree.heading('#4', text="Suspendido")
 
-    arbol = ttk.Treeview(ventana_gestionar_empleados,columns=("ID", "Nombre", "Apellido", "DNI", "Area"))
+    arbol = ttk.Treeview(ventana_agregar_empleados,columns=("ID", "Nombre", "Apellido", "DNI", "Area"))
     arbol.insert("", END, text="", values=("5", "Jorge","Ramirez", "14567362", "CNC")) ## empleado hardcodeado para mostrar
     arbol.heading("#0",text="")
     arbol.heading("#1", text="ID")
@@ -121,7 +164,7 @@ def gestionar_empleados():
 ## funcion para agregar empleados
 
 def agregar_empleado():
-    print("ASD")
+    print("Empleado agregado")
 
 
 def suspender_empleados():
