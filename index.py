@@ -11,7 +11,7 @@ class Persona:
         self.wind = window
         self.wind.title('Empleados')
 
-        #crear un container
+        #creamos un container
         Frame = LabelFrame(self.wind, text= 'Empleados')
         Frame.grid(row = 0, column= 0, columnspan= 3, pady=20 )
         #input

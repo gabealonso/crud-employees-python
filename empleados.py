@@ -1,5 +1,5 @@
 from tkinter import *
-import os
+import sqlite3
 from tkinter import ttk
 
 def app():
@@ -39,7 +39,14 @@ def verifica_login():
 def ingresar_pantalla_principal():
     global ventana_gestor
     ventana_gestor = Toplevel(ventana_login)
-    ventana_login.geometry("300x250")
+    ventana_gestor.geometry("300x250")
     ventana_gestor.title("Gestos de Empleados v1.0.0 BETA")
+    pestas_color="DarkGrey"
+    Label(ventana_gestor, text="Menu principal", bg="LightGreen", width="300", height="2", font=("Calibri", 13)).pack()#ETIQUETA CON TEXTO
+    Button(ventana_gestor, text="Agregar administrador", height="2", width="30", bg=pestas_color).pack() #BOTÓN "Acceder"
+    Button(ventana_gestor, text="Agregar empleado", height="2", width="30", bg=pestas_color).pack() #BOTÓN "Registrarse".
+    Button(ventana_gestor, text="Desactivar empleado", height="2", width="30", bg=pestas_color).pack() #BOTÓN "Acceder"
+    Button(ventana_gestor, text="Buscar empleado", height="2", width="30", bg=pestas_color).pack() #BOTÓN "Registrarse".
+    
 
 app()
