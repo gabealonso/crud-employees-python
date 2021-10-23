@@ -31,22 +31,49 @@ def app():
     ventana_login.mainloop()
 
 def verifica_login():
-    if entrada_login_usuario.get() == "user" and entrada_login_clave.get() == "123":
+    if entrada_login_usuario.get() == "user" and entrada_login_clave.get() == "123": ## falta conexion a la DB
         ingresar_pantalla_principal()
     else:
         print("nada que ver la psswrd")
+
+## Menu principal
 
 def ingresar_pantalla_principal():
     global ventana_gestor
     ventana_gestor = Toplevel(ventana_login)
     ventana_gestor.geometry("300x250")
+    ventana_gestor.grab_set()
     ventana_gestor.title("Gestos de Empleados v1.0.0 BETA")
     pestas_color="DarkGrey"
-    Label(ventana_gestor, text="Menu principal", bg="LightGreen", width="300", height="2", font=("Calibri", 13)).pack()#ETIQUETA CON TEXTO
-    Button(ventana_gestor, text="Agregar administrador", height="2", width="30", bg=pestas_color).pack() #BOTÓN "Acceder"
-    Button(ventana_gestor, text="Agregar empleado", height="2", width="30", bg=pestas_color).pack() #BOTÓN "Registrarse".
-    Button(ventana_gestor, text="Desactivar empleado", height="2", width="30", bg=pestas_color).pack() #BOTÓN "Acceder"
-    Button(ventana_gestor, text="Buscar empleado", height="2", width="30", bg=pestas_color).pack() #BOTÓN "Registrarse".
-    
+    Label(ventana_gestor, text="Menu principal", bg="LightGreen", width="300", height="2").pack()
+    Button(ventana_gestor, text="Agregar administrador", height="2", width="30", bg=pestas_color, command = registrar_admin).pack()
+    Button(ventana_gestor, text="Gestionar empleados", height="2", width="30", bg=pestas_color, command = gestionar_empleados).pack()
+    Button(ventana_gestor, text="Desactivar empleado", height="2", width="30", bg=pestas_color, command = suspender_empleados).pack()
+
+## Pantalla agregar admin    
+
+def registrar_admin():
+    global ventana_registrar_admin
+    ventana_registrar_admin = Toplevel(ventana_gestor)
+    ventana_registrar_admin.geometry("300x250")
+    ventana_registrar_admin.grab_set()
+    ventana_registrar_admin.title("Registrar administrador")
+    ## agregar un campo user, otro password y un boton de registro
+
+def gestionar_empleados():
+    global ventana_gestionar_empleados
+    ventana_gestionar_empleados = Toplevel(ventana_gestor)
+    ventana_gestionar_empleados.geometry("300x250")
+    ventana_gestionar_empleados.grab_set()
+    ventana_gestionar_empleados.title("Agregar empleado")
+    # agregar el form para agregar empleados y la tabla para buscar empleados
+
+def suspender_empleados():
+    global ventana_suspender_empleados
+    ventana_suspender_empleados = Toplevel(ventana_gestor)
+    ventana_suspender_empleados.geometry("300x250")
+    ventana_suspender_empleados.grab_set()
+    ventana_suspender_empleados.title("Suspender empleado")
+    # agregar un boton para desactivar y un input para el ID del empleado
 
 app()
