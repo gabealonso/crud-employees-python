@@ -109,13 +109,13 @@ def gestionar_empleados():
     # tree.heading('#4', text="Suspendido")
 
     arbol = ttk.Treeview(ventana_gestionar_empleados,columns=("ID", "Nombre", "Apellido", "DNI", "Area"))
-    arbol.insert("",END,text="",values=("5", "Jorge","Ramirez", "14567362", "CNC")) ## empleado hardcodeado para mostrar
+    arbol.insert("", END, text="", values=("5", "Jorge","Ramirez", "14567362", "CNC")) ## empleado hardcodeado para mostrar
     arbol.heading("#0",text="")
-    arbol.heading("ID",text="ID")
-    arbol.heading("Nombre",text="Nombre")
-    arbol.heading("Apellido",text="Apellido")
-    arbol.heading("DNI",text="DNI")
-    arbol.heading("Area",text="Area")
+    arbol.heading("#1", text="ID")
+    arbol.heading("#2", text="Nombre")
+    arbol.heading("#3", text="Apellido")
+    arbol.heading("#4", text="DNI")
+    arbol.heading("#5", text="Area")
     arbol.pack()
 
 ## funcion para agregar empleados
