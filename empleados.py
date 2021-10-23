@@ -34,7 +34,7 @@ def verifica_login():
     if entrada_login_usuario.get() == "user" and entrada_login_clave.get() == "123": ## falta conexion a la DB
         ingresar_pantalla_principal()
     else:
-        print("nada que ver la psswrd")
+        print("password incorrecta")
 
 ## Menu principal
 
@@ -58,7 +58,6 @@ def registrar_admin():
     ventana_registrar_admin.geometry("300x250")
     ventana_registrar_admin.grab_set()
     ventana_registrar_admin.title("Registrar administrador")
-    ## agregar un campo user, otro password y un boton de registro
     global verifica_usuario_nuevo
     global verifica_clave_nuevo
  
@@ -102,19 +101,28 @@ def gestionar_empleados():
     entrada_dni_empleado.pack()
 
     Button(ventana_gestionar_empleados, text="Desactivar empleado", height="2", width="30", command = agregar_empleado).pack()
-    tree = ttk.Treeview(height=10, columns=("Nombre","Apellido","DNI","Activo", "Suspendido"))
-    tree.heading('#0', text="Nombre")
-    tree.heading('#1', text="Apellido")
-    tree.heading('#2', text="DNI")
-    tree.heading('#3', text="Activo")
-    tree.heading('#4', text="Suspendido")
+    # tree = ttk.Treeview(height=10, columns=("Nombre","Apellido","DNI","Activo", "Suspendido"))
+    # tree.heading('#0', text="Nombre")
+    # tree.heading('#1', text="Apellido")
+    # tree.heading('#2', text="DNI")
+    # tree.heading('#3', text="Activo")
+    # tree.heading('#4', text="Suspendido")
 
+    arbol = ttk.Treeview(ventana_gestionar_empleados,columns=("ID", "Nombre", "Apellido", "DNI", "Area"))
+    arbol.insert("",END,text="",values=("5", "Jorge","Ramirez", "14567362", "CNC")) ## empleado hardcodeado para mostrar
+    arbol.heading("#0",text="")
+    arbol.heading("ID",text="ID")
+    arbol.heading("Nombre",text="Nombre")
+    arbol.heading("Apellido",text="Apellido")
+    arbol.heading("DNI",text="DNI")
+    arbol.heading("Area",text="Area")
+    arbol.pack()
+
+## funcion para agregar empleados
 
 def agregar_empleado():
     print("ASD")
 
-
-    # agregar el form para agregar empleados y la tabla para buscar empleados
 
 def suspender_empleados():
     global ventana_suspender_empleados
@@ -122,7 +130,6 @@ def suspender_empleados():
     ventana_suspender_empleados.geometry("300x250")
     ventana_suspender_empleados.grab_set()
     ventana_suspender_empleados.title("Suspender empleado")
-    # agregar un boton para desactivar y un input para el ID del empleado
     global id_usuario
  
     id_usuario = StringVar()
