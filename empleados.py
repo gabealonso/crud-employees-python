@@ -63,9 +63,35 @@ def registrar_admin():
 def gestionar_empleados():
     global ventana_gestionar_empleados
     ventana_gestionar_empleados = Toplevel(ventana_gestor)
-    ventana_gestionar_empleados.geometry("300x250")
+    ventana_gestionar_empleados.geometry("1250x640")
     ventana_gestionar_empleados.grab_set()
     ventana_gestionar_empleados.title("Agregar empleado")
+        
+    Label(ventana_gestionar_empleados, text="Nombre ").pack()
+    entrada_nombre_empleado = Entry(ventana_gestionar_empleados)
+    entrada_nombre_empleado.pack()
+
+    Label(ventana_gestionar_empleados, text="Apellido").pack()
+    entrada_apellido_empleado = Entry(ventana_gestionar_empleados)
+    entrada_apellido_empleado.pack()
+
+    Label(ventana_gestionar_empleados, text="DNI").pack()
+    entrada_dni_empleado = Entry(ventana_gestionar_empleados)
+    entrada_dni_empleado.pack()
+
+    Button(ventana_gestionar_empleados, text="Desactivar empleado", height="2", width="30", command = agregar_empleado).pack()
+    tree = ttk.Treeview(height=10, columns=("Nombre","Apellido","DNI","Activo", "Suspendido"))
+    tree.heading('#0', text="Nombre")
+    tree.heading('#1', text="Apellido")
+    tree.heading('#2', text="DNI")
+    tree.heading('#3', text="Activo")
+    tree.heading('#4', text="Suspendido")
+
+
+def agregar_empleado():
+    print("ASD")
+
+
     # agregar el form para agregar empleados y la tabla para buscar empleados
 
 def suspender_empleados():
