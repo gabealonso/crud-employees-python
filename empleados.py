@@ -75,5 +75,21 @@ def suspender_empleados():
     ventana_suspender_empleados.grab_set()
     ventana_suspender_empleados.title("Suspender empleado")
     # agregar un boton para desactivar y un input para el ID del empleado
+    global id_usuario
+ 
+    id_usuario = StringVar()
+ 
+    global entrada_id_usuario
+ 
+    Label(ventana_suspender_empleados, text="ID del empleado * ").pack()
+    entrada_id_usuario = Entry(ventana_suspender_empleados, textvariable=id_usuario)
+    entrada_id_usuario.pack()
+    Button(ventana_suspender_empleados, text="Desactivar", width=10, height=1, command = desactivar).pack()
+
+## funcion para desactivar empleado
+
+def desactivar():
+    print("desactivado")
+
 
 app()
