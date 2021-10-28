@@ -39,15 +39,21 @@ def app():
     Label(ventana_login, text="Contraseña * ", bg=BackGroundColor, padx=20, pady=2).pack()
     entrada_login_clave = Entry(ventana_login, textvariable=verifica_clave, show= '*')
     entrada_login_clave.pack()
-#    Label(ventana_login, text="").pack()
     Button(ventana_login, text="Acceder", width=10, height=1, bg=ColorBotones, command = verifica_login).pack()
     ventana_login.mainloop()
 
+
 def verifica_login():
-    if entrada_login_usuario.get() == "user" and entrada_login_clave.get() == "123": ## falta conexion a la DB
+    user = entrada_login_usuario.get()
+    password = entrada_login_clave.get()
+    login = [user, password]
+    query = 'SELECT usuario, clave FROM usuarios_rrhh WHERE usuario = ? AND clave = ?;'
+    db_users = run_query(query, login)
+    if db_users.fetchall():
         ingresar_pantalla_principal()
     else:
-        print("password incorrecta")
+        print("Password incorrecta")
+
 
 ## Menu principal
 
