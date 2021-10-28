@@ -6,7 +6,18 @@ ColorBotones = '#cdcdb4'
 BackGroundColor = '#eae2b7'
 HeadingColor = '#fcbf49'
 
+dbname = 'database.db'
+
+def run_query(self, query, parameters = ()):
+    with sqlite3.connect(self.dbname) as conn:
+        cursor = conn.cursor()
+        result = cursor.execute(query, parameters)
+        conn.commit()
+        print(result)
+    return result
+
 def app():
+    
     global ventana_login
     ventana_login = Tk()
     ventana_login.title("Acceso a la cuenta")
