@@ -102,9 +102,17 @@ def registrar_admin():
 ## funcion para registrar nuevo administrador
 
 def registrar():
-    query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
-    parameters = (entrada_registro_usuario.get(), sha256(entrada_registro_clave.get().encode('utf-8')).hexdigest())
-    run_query(query, parameters)
+    # validacion
+    userNuevo = entrada_registro_usuario.get()
+    passwordNueva = entrada_registro_clave.get()
+    registerParameters = [userNuevo, sha256(passwordNueva.encode('utf-8')).hexdigest()]
+    query = 'SELECT usuario FROM usuarios_rrhh WHERE usuario = ?;'
+    db_users = run_query(query, (registerParameters[0],))
+    if db_users.fetchall():
+        print("Administrador existente")
+    else:
+        query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
+        run_query(query, registerParameters)
 
 ## pantalla modificar empleados
 
