@@ -13,7 +13,6 @@ def run_query(self, query, parameters = ()):
         cursor = conn.cursor()
         result = cursor.execute(query, parameters)
         conn.commit()
-        print(result)
     return result
 
 def app():
@@ -96,7 +95,11 @@ def registrar_admin():
 ## funcion para registrar nuevo administrador
 
 def registrar():
-    print("registrado")
+    query = 'SELECT nombre,apellido,dni,activo,suspendido FROM empleados ORDER BY nombre DESC'
+    
+    db_rows  =  run_query(query)
+
+    print(db_rows)
 
 ## pantalla modificar empleados
 
