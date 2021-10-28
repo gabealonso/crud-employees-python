@@ -8,8 +8,8 @@ HeadingColor = '#fcbf49'
 
 dbname = 'database.db'
 
-def run_query(self, query, parameters = ()):
-    with sqlite3.connect(self.dbname) as conn:
+def run_query(query, parameters = ()):
+    with sqlite3.connect(dbname) as conn:
         cursor = conn.cursor()
         result = cursor.execute(query, parameters)
         conn.commit()
@@ -95,11 +95,9 @@ def registrar_admin():
 ## funcion para registrar nuevo administrador
 
 def registrar():
-    query = 'SELECT nombre,apellido,dni,activo,suspendido FROM empleados ORDER BY nombre DESC'
-    
-    db_rows  =  run_query(query)
-
-    print(db_rows)
+    query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
+    parameters = (entrada_registro_usuario.get(), entrada_registro_clave.get())
+    run_query(query, parameters)
 
 ## pantalla modificar empleados
 
@@ -188,12 +186,23 @@ def agregar_empleados():
 
     tv.insert(parent='', index=0, iid=0, text='', values=('45','Miguel','Rodriguez', '14243531', 'Operario de CNC')) # empleado hardcodeado para mostrar
     tv.pack()
-
+    get_empleados()
 ## funcion para agregar empleados
 
 def agregar_empleado():
     print("Empleado agregado")
 
+def get_empleados():
+       #limpiar la tabla
+    records = ttk.tree.get_children()
+    for element in records:
+        ttk.Treeview.delete(element)
+       #consulta    
+    query = 'SELECT nombre,apellido,dni,activo,suspendido FROM empleados ORDER BY nombre DESC'
+    db_rows  = run_query(query)
+    for row in db_rows:
+        print(row[0], row[1],row[2],row[3],row[4])
+        ttk.tree.insert(parent='', index=0, values=(row[0],row[1],row[2],row[3],row[4]) )
 
 def suspender_empleados():
     global ventana_suspender_empleados
