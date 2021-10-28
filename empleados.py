@@ -1,6 +1,7 @@
 from tkinter import *
-import sqlite3
 from tkinter import ttk
+import sqlite3
+from hashlib import sha256
 
 ColorBotones = '#cdcdb4'
 BackGroundColor = '#eae2b7'
@@ -46,7 +47,7 @@ def app():
 def verifica_login():
     user = entrada_login_usuario.get()
     password = entrada_login_clave.get()
-    login = [user, password]
+    login = [user, sha256(password.encode('utf-8')).hexdigest()]
     query = 'SELECT usuario, clave FROM usuarios_rrhh WHERE usuario = ? AND clave = ?;'
     db_users = run_query(query, login)
     if db_users.fetchall():
@@ -102,7 +103,7 @@ def registrar_admin():
 
 def registrar():
     query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
-    parameters = (entrada_registro_usuario.get(), entrada_registro_clave.get())
+    parameters = (entrada_registro_usuario.get(), sha256(entrada_registro_clave.get().encode('utf-8')).hexdigest())
     run_query(query, parameters)
 
 ## pantalla modificar empleados
