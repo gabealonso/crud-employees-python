@@ -220,6 +220,7 @@ def get_empleados():
     for row in db_rows:
         tv.insert(parent='', index=0, values=(row[0], row[1],row[2],row[3]))
 
+
 def suspender_activar_empleados():
     global ventana_suspender_activar_empleados
     suspender_activar_empleados = Toplevel(ventana_gestor)
