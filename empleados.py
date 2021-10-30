@@ -188,23 +188,24 @@ def agregar_empleados():
 
     Button(ventana_agregar_empleados, text="Agregar empleado", height="2", width="30", bg=ColorBotones, command = agregar_empleado).pack()
 
+    global tv 
     tv = ttk.Treeview(ventana_agregar_empleados)
-    tv['columns']=('ID', 'Nombre', 'Apellido', 'DNI', 'Area')
+    tv['columns']=('Nombre', 'Apellido', 'DNI', 'Area')
     tv.column('#0', width=0, stretch=NO)
-    tv.column('ID', anchor=CENTER, width=80)
+    #tv.column('ID', anchor=CENTER, width=80)
     tv.column('Nombre', anchor=CENTER, width=80)
     tv.column('Apellido', anchor=CENTER, width=80)
     tv.column('DNI', anchor=CENTER, width=120)
     tv.column('Area', anchor=CENTER, width=120)
 
     tv.heading('#0', text='', anchor=CENTER)
-    tv.heading('ID', text='ID', anchor=CENTER)
+    #tv.heading('ID', text='ID', anchor=CENTER)
     tv.heading('Nombre', text='Nombre', anchor=CENTER)
     tv.heading('Apellido', text='Apellido', anchor=CENTER)
     tv.heading('DNI', text='DNI', anchor=CENTER)
     tv.heading('Area', text='Area', anchor=CENTER)
 
-    tv.insert(parent='', index=0, iid=0, text='', values=('45','Miguel','Rodriguez', '14243531', 'Operario de CNC')) # empleado hardcodeado para mostrar
+    #tv.insert(parent='', index=0, id=0, text='', values=('45','Miguel','Rodriguez', '14243531', 'Operario de CNC')) # empleado hardcodeado para mostrar
     tv.pack()
     get_empleados()
 ## funcion para agregar empleados
@@ -213,16 +214,11 @@ def agregar_empleado():
     print("Empleado agregado")
 
 def get_empleados():
-       #limpiar la tabla
-    records = ttk.tree.get_children()
-    for element in records:
-        ttk.Treeview.delete(element)
-       #consulta    
-    query = 'SELECT nombre,apellido,dni,activo,suspendido FROM empleados ORDER BY nombre DESC'
+    #consulta    
+    query = 'SELECT nombre,apellido,dni,area FROM empleados WHERE suspendido = 0 ORDER BY nombre DESC'
     db_rows  = run_query(query)
     for row in db_rows:
-        print(row[0], row[1],row[2],row[3],row[4])
-        ttk.tree.insert(parent='', index=0, values=(row[0],row[1],row[2],row[3],row[4]) )
+        tv.insert(parent='', index=0, values=(row[0], row[1],row[2],row[3]))
 
 def suspender_activar_empleados():
     global ventana_suspender_activar_empleados
