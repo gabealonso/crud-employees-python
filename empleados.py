@@ -71,7 +71,7 @@ def ingresar_pantalla_principal():
     Button(ventana_gestor, text="Agregar administrador", height="2", width="30", bg=ColorBotones, command = registrar_admin).pack()
     Button(ventana_gestor, text="Agregar empleados", height="2", width="30", bg=ColorBotones, command = agregar_empleados).pack()
     Button(ventana_gestor, text="Modificar empleado", height="2", width="30", bg=ColorBotones, command = modificar_empleados).pack()
-    Button(ventana_gestor, text="Desactivar empleado", height="2", width="30", bg=ColorBotones,  command = suspender_empleados).pack()
+    Button(ventana_gestor, text="Suspender o Activar empleado", height="2", width="30", bg=ColorBotones,  command = suspender_activar_empleados).pack()
 
 ## Pantalla agregar admin    
 
@@ -224,16 +224,16 @@ def get_empleados():
         print(row[0], row[1],row[2],row[3],row[4])
         ttk.tree.insert(parent='', index=0, values=(row[0],row[1],row[2],row[3],row[4]) )
 
-def suspender_empleados():
-    global ventana_suspender_empleados
-    ventana_suspender_empleados = Toplevel(ventana_gestor)
-    ventana_suspender_empleados.geometry("250x200")
-    ventana_suspender_empleados.iconbitmap('icon.ico')
-    ventana_suspender_empleados.configure(bg=BackGroundColor)
-    ventana_suspender_empleados.grab_set()
-    ventana_suspender_empleados.title("Suspender empleado")
+def suspender_activar_empleados():
+    global ventana_suspender_activar_empleados
+    suspender_activar_empleados = Toplevel(ventana_gestor)
+    suspender_activar_empleados.geometry("250x200")
+    suspender_activar_empleados.iconbitmap('icon.ico')
+    suspender_activar_empleados.configure(bg=BackGroundColor)
+    suspender_activar_empleados.grab_set()
+    suspender_activar_empleados.title("Suspender/Activar empleado")
 
-    Label(ventana_suspender_empleados, text="Suspender empleado", bg=HeadingColor, width="300", height="2").pack()
+    Label(suspender_activar_empleados, text="Suspender/Activar empleado", bg=HeadingColor, width="300", height="2").pack()
 
     global id_usuario
  
@@ -241,20 +241,38 @@ def suspender_empleados():
  
     global entrada_id_usuario
  
-    Label(ventana_suspender_empleados, text="ID del empleado * ", bg=BackGroundColor).pack()
-    entrada_id_usuario = Entry(ventana_suspender_empleados, textvariable=id_usuario)
+    Label(suspender_activar_empleados, text="ID del empleado * ", bg=BackGroundColor).pack()
+    entrada_id_usuario = Entry(suspender_activar_empleados, textvariable=id_usuario)
     entrada_id_usuario.pack()
-    Button(ventana_suspender_empleados, text="Desactivar", width=10, height=1,bg=ColorBotones, command = desactivar).pack()
+    Button(suspender_activar_empleados, text="Desactivar", width=10, height=1,bg=ColorBotones, command = desactivar).pack()
+    Button(suspender_activar_empleados, text="Activar", width=10, height=1,bg=ColorBotones, command = activar).pack()
 
 ## funcion para desactivar empleado
 
 def desactivar():
-    empleado = entrada_id_usuario.get()
-    query = 'UPDATE empleados SET suspendido = 1 WHERE id = ?'
-    db_empleados = run_query(query, (empleado,))
+    id_empleado = entrada_id_usuario.get()
+    # validacion id empleado
+    query = 'SELECT id FROM empleados WHERE id = ?'
+    db_empleados = run_query(query, (id_empleado,))
     if db_empleados.fetchall():
-        print("Empleado suspendido")
+        # suspension del empleado
+        query = 'UPDATE empleados SET suspendido = 1 WHERE id = ?'
+        db_empleados = run_query(query, (id_empleado,))
     else:
-        print("Empleado no encontrado")
+        print("Empleado inexistente")
+
+## funcion para activar empleado
+
+def activar():
+    id_empleado = entrada_id_usuario.get()
+    # validacion id empleado
+    query = 'SELECT id FROM empleados WHERE id = ?'
+    db_empleados = run_query(query, (id_empleado,))
+    if db_empleados.fetchall():
+        # activacion del empleado
+        query = 'UPDATE empleados SET suspendido = 0 WHERE id = ?'
+        db_empleados = run_query(query, (id_empleado,))
+    else:
+        print("Empleado inexistente")
 
 app()
