@@ -20,7 +20,7 @@ def app():
     
     global ventana_login
     ventana_login = Tk()
-    ventana_login.iconbitmap('/icon.ico')
+    ventana_login.iconbitmap('icon.ico')
     ventana_login.title("Acceso a la cuenta")
     ventana_login.geometry("350x300")
     ventana_login.configure(bg=BackGroundColor)
@@ -63,6 +63,7 @@ def ingresar_pantalla_principal():
     global ventana_gestor
     ventana_gestor = Toplevel(ventana_login)
     ventana_gestor.geometry("350x300")
+    ventana_gestor.iconbitmap('icon.ico')
     ventana_gestor.configure(bg=BackGroundColor)
     ventana_gestor.grab_set()
     ventana_gestor.title("Gestor de Empleados v1.0.0 BETA")
@@ -78,6 +79,7 @@ def registrar_admin():
     global ventana_registrar_admin
     ventana_registrar_admin = Toplevel(ventana_gestor)
     ventana_registrar_admin.geometry("500x250")
+    ventana_registrar_admin.iconbitmap('icon.ico')
     ventana_registrar_admin.configure(bg=BackGroundColor)
     ventana_registrar_admin.grab_set()
     ventana_registrar_admin.title("Registrar administrador")
@@ -121,6 +123,7 @@ def modificar_empleados():
     global ventana_modificar_empleados
     ventana_modificar_empleados = Toplevel(ventana_gestor)
     ventana_modificar_empleados.geometry("500x350")
+    ventana_modificar_empleados.iconbitmap('icon.ico')
     ventana_modificar_empleados.configure(bg=BackGroundColor)
     ventana_modificar_empleados.grab_set()
     ventana_modificar_empleados.title("Modificar empleado")
@@ -160,6 +163,7 @@ def agregar_empleados():
     global ventana_agregar_empleados
     ventana_agregar_empleados = Toplevel(ventana_gestor)
     ventana_agregar_empleados.geometry("800x500")
+    ventana_agregar_empleados.iconbitmap('icon.ico')
     ventana_agregar_empleados.configure(bg=BackGroundColor)
     ventana_agregar_empleados.grab_set()
     ventana_agregar_empleados.title("Agregar empleado")
@@ -224,6 +228,7 @@ def suspender_empleados():
     global ventana_suspender_empleados
     ventana_suspender_empleados = Toplevel(ventana_gestor)
     ventana_suspender_empleados.geometry("250x200")
+    ventana_suspender_empleados.iconbitmap('icon.ico')
     ventana_suspender_empleados.configure(bg=BackGroundColor)
     ventana_suspender_empleados.grab_set()
     ventana_suspender_empleados.title("Suspender empleado")
