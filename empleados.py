@@ -122,7 +122,7 @@ def registrar():
 def modificar_empleados():
     global ventana_modificar_empleados
     ventana_modificar_empleados = Toplevel(ventana_gestor)
-    ventana_modificar_empleados.geometry("500x350")
+    ventana_modificar_empleados.geometry("500x400")
     ventana_modificar_empleados.iconbitmap('icon.ico')
     ventana_modificar_empleados.configure(bg=BackGroundColor)
     ventana_modificar_empleados.grab_set()
@@ -130,9 +130,19 @@ def modificar_empleados():
 
     Label(ventana_modificar_empleados, text="Modificar empleado", bg=HeadingColor, width="300", height="2").pack()
 
-    Label(ventana_modificar_empleados, text="ID ", bg=BackGroundColor).pack()
-    entrada_id_empleado = Entry(ventana_modificar_empleados)
-    entrada_id_empleado.pack()
+    global entrada_dni_empleado
+    global entrada_dni_nuevo_empleado
+    global entrada_nombre_empleado
+    global entrada_apellido_empleado
+    global entrada_area_empleado
+
+    Label(ventana_modificar_empleados, text="DNI del empleado a modificar * ", bg=BackGroundColor).pack()
+    entrada_dni_empleado = Entry(ventana_modificar_empleados)
+    entrada_dni_empleado.pack()
+
+    Label(ventana_modificar_empleados, text="Nuevo DNI", bg=BackGroundColor).pack()
+    entrada_dni_nuevo_empleado = Entry(ventana_modificar_empleados)
+    entrada_dni_nuevo_empleado.pack()
 
     Label(ventana_modificar_empleados, text="Nombre ", bg=BackGroundColor).pack()
     entrada_nombre_empleado = Entry(ventana_modificar_empleados)
@@ -141,10 +151,6 @@ def modificar_empleados():
     Label(ventana_modificar_empleados, text="Apellido", bg=BackGroundColor).pack()
     entrada_apellido_empleado = Entry(ventana_modificar_empleados)
     entrada_apellido_empleado.pack()
-
-    Label(ventana_modificar_empleados, text="DNI", bg=BackGroundColor).pack()
-    entrada_dni_empleado = Entry(ventana_modificar_empleados)
-    entrada_dni_empleado.pack()
 
     Label(ventana_modificar_empleados, text="Area", bg=BackGroundColor).pack()
     entrada_area_empleado = Entry(ventana_modificar_empleados)
@@ -155,7 +161,22 @@ def modificar_empleados():
 ## funcion para modificar empleado
 
 def modificar_empleado():
-    print("Empleado modificado")
+    dni_empleado = entrada_dni_empleado.get()
+    dni_nuevo = entrada_dni_nuevo_empleado.get()
+    nombre = entrada_nombre_empleado.get()
+    apellido = entrada_apellido_empleado.get()
+    area = entrada_area_empleado.get()
+    nuevosValores = [nombre, apellido, dni_nuevo, area, dni_empleado]
+    # validacion dni empleado
+    query = 'SELECT dni FROM empleados WHERE dni = ?'
+    db_empleados = run_query(query, (dni_empleado,))
+    if db_empleados.fetchall():
+        # modificacion de empleado
+        query = 'UPDATE empleados SET nombre = ?, apellido = ?, dni = ?, area = ? WHERE dni = ?'
+        db_empleados = run_query(query, nuevosValores)
+    else:
+        print("Empleado inexistente")
+        
 
 # pantalla agregar empleados
 
