@@ -237,7 +237,7 @@ def suspender_activar_empleados():
  
     global entrada_id_usuario
  
-    Label(suspender_activar_empleados, text="ID del empleado * ", bg=BackGroundColor).pack()
+    Label(suspender_activar_empleados, text="DNI del empleado * ", bg=BackGroundColor).pack()
     entrada_id_usuario = Entry(suspender_activar_empleados, textvariable=id_usuario)
     entrada_id_usuario.pack()
     Button(suspender_activar_empleados, text="Desactivar", width=10, height=1,bg=ColorBotones, command = desactivar).pack()
@@ -246,28 +246,28 @@ def suspender_activar_empleados():
 ## funcion para desactivar empleado
 
 def desactivar():
-    id_empleado = entrada_id_usuario.get()
-    # validacion id empleado
-    query = 'SELECT id FROM empleados WHERE id = ?'
-    db_empleados = run_query(query, (id_empleado,))
+    dni_empleado = entrada_id_usuario.get()
+    # validacion dni empleado
+    query = 'SELECT dni FROM empleados WHERE dni = ?'
+    db_empleados = run_query(query, (dni_empleado,))
     if db_empleados.fetchall():
         # suspension del empleado
-        query = 'UPDATE empleados SET suspendido = 1 WHERE id = ?'
-        db_empleados = run_query(query, (id_empleado,))
+        query = 'UPDATE empleados SET suspendido = 1 WHERE dni = ?'
+        db_empleados = run_query(query, (dni_empleado,))
     else:
         print("Empleado inexistente")
 
 ## funcion para activar empleado
 
 def activar():
-    id_empleado = entrada_id_usuario.get()
+    dni_empleado = entrada_id_usuario.get()
     # validacion id empleado
-    query = 'SELECT id FROM empleados WHERE id = ?'
-    db_empleados = run_query(query, (id_empleado,))
+    query = 'SELECT dni FROM empleados WHERE dni = ?'
+    db_empleados = run_query(query, (dni_empleado,))
     if db_empleados.fetchall():
         # activacion del empleado
-        query = 'UPDATE empleados SET suspendido = 0 WHERE id = ?'
-        db_empleados = run_query(query, (id_empleado,))
+        query = 'UPDATE empleados SET suspendido = 0 WHERE dni = ?'
+        db_empleados = run_query(query, (dni_empleado,))
     else:
         print("Empleado inexistente")
 
