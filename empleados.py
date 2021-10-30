@@ -241,7 +241,7 @@ def suspender_activar_empleados():
  
     global entrada_id_usuario
  
-    Label(suspender_activar_empleados, text="ID del empleado * ", bg=BackGroundColor).pack()
+    Label(suspender_activar_empleados, text="DNI del empleado * ", bg=BackGroundColor).pack()
     entrada_id_usuario = Entry(suspender_activar_empleados, textvariable=id_usuario)
     entrada_id_usuario.pack()
     Button(suspender_activar_empleados, text="Desactivar", width=10, height=1,bg=ColorBotones, command = desactivar).pack()
