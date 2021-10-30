@@ -20,6 +20,7 @@ def app():
     
     global ventana_login
     ventana_login = Tk()
+    ventana_login.iconbitmap('/icon.jpeg')
     ventana_login.title("Acceso a la cuenta")
     ventana_login.geometry("350x300")
     ventana_login.configure(bg=BackGroundColor)
