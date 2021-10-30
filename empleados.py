@@ -249,6 +249,12 @@ def suspender_empleados():
 ## funcion para desactivar empleado
 
 def desactivar():
-    print("desactivado")
+    empleado = entrada_id_usuario.get()
+    query = 'UPDATE empleados SET suspendido = 1 WHERE id = ?'
+    db_empleados = run_query(query, (empleado,))
+    if db_empleados.fetchall():
+        print("Empleado suspendido")
+    else:
+        print("Empleado no encontrado")
 
 app()
