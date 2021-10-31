@@ -127,7 +127,6 @@ def registrar():
     userNuevo = entrada_registro_usuario.get()
     passwordNueva = entrada_registro_clave.get()
     registerParameters = [userNuevo, passwordNueva]
-    print(registerParameters)
     if (registerParameters[0] != '' and registerParameters[1] != ''):
         query = 'SELECT usuario FROM usuarios_rrhh WHERE usuario = ?;'
         db_users = run_query(query, (registerParameters[0],))
@@ -330,7 +329,7 @@ def desactivar():
         # suspension del empleado
             query = 'UPDATE empleados SET suspendido = 1 WHERE dni = ?'
             db_empleados = run_query(query, (dni_empleado,))
-            messagebox.showinfo("Empleado suspendido correctamente", "El empleado ya fue suspendido correctamente")
+            messagebox.showinfo("Empleado suspendido correctamente", "El empleado fue suspendido correctamente")
         else:
             messagebox.showinfo("Empleado no encontrado", "DNI invalido")
     else:
