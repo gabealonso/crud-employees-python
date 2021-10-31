@@ -28,6 +28,8 @@ def run_query(query, parameters = ()):
         conn.commit()
     return result
 
+## aplicacion
+
 def app():
     
     global ventana_login
@@ -123,7 +125,7 @@ def registrar():
     # validacion
     userNuevo = entrada_registro_usuario.get()
     passwordNueva = entrada_registro_clave.get()
-    registerParameters = [userNuevo, sha256(passwordNueva.encode('utf-8')).hexdigest()]
+    registerParameters = [userNuevo, passwordNueva]
     print(registerParameters)
     if (registerParameters[0] != '' and registerParameters[1] != ''):
         query = 'SELECT usuario FROM usuarios_rrhh WHERE usuario = ?;'
@@ -132,6 +134,7 @@ def registrar():
             messagebox.showinfo("Usuario registrado","El nombre de usuario ya se encuentra registrado")
         else:
             query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
+            registerParameters = [userNuevo, sha256(passwordNueva.encode('utf-8')).hexdigest()] ## se pasa el hash aca para poder validar
             run_query(query, registerParameters)
             messagebox.showinfo("Registro exitoso","El usuario fue registrado correctamente")
     else:
