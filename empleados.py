@@ -302,9 +302,9 @@ def desactivar():
         # suspension del empleado
         query = 'UPDATE empleados SET suspendido = 1 WHERE dni = ?'
         db_empleados = run_query(query, (dni_empleado,))
-        messagebox.showinfo("Empleado suspendido correctamente","El empleado ya fue suspendido correctamente")
+        messagebox.showinfo("Empleado suspendido correctamente", "El empleado ya fue suspendido correctamente")
     else:
-        messagebox.showinfo("Empleado ya suspendido","El empleado ya se encuentra suspendido")
+        messagebox.showinfo("Empleado no encontrado", "DNI invalido")
 
 ## funcion para activar empleado
 
@@ -317,8 +317,8 @@ def activar():
         # activacion del empleado
         query = 'UPDATE empleados SET suspendido = 0 WHERE dni = ?'
         db_empleados = run_query(query, (dni_empleado,))
-        messagebox.showinfo("Empleado activo","El empleado se activo correctamente")
+        messagebox.showinfo("Empleado activo", "El empleado se activo correctamente")
     else:
-        messagebox.showinfo("Empleado activo","El empleado ya se encuentra activo")
+        messagebox.showinfo("Empleado no encontrado", "DNI invalido")
 
 app()
