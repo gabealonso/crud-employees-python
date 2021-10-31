@@ -10,6 +10,17 @@ HeadingColor = '#fcbf49'
 
 dbname = 'database.db'
 
+class Empleado():
+    def __init__(self, nombre, apellido, dni, area):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.dni = dni
+        self.area = area
+
+    def __str__(self):
+        cad = "Nombre: {}, Apellido {}, DNI {}, Area {}"
+        return cad.format(self.nombre, self.apellido, self.dni, self.area)
+
 def run_query(query, parameters = ()):
     with sqlite3.connect(dbname) as conn:
         cursor = conn.cursor()
@@ -245,14 +256,16 @@ def agregar_empleado():
     ApellidoEmpleado = entrada_apellido_empleado.get()
     DniEmpleado = entrada_dni_empleado.get()
     AreaEmpleado =  entrada_area_empleado.get()
-    registerParameters = [NombreEmpleado, ApellidoEmpleado,DniEmpleado, AreaEmpleado]
+    # instancia de clase empleado
+    empleadoClase = Empleado(NombreEmpleado, ApellidoEmpleado, DniEmpleado, AreaEmpleado)
+    empleadoParameters = [empleadoClase.nombre, empleadoClase.apellido, empleadoClase.dni, empleadoClase.area]
     query = 'SELECT dni FROM empleados WHERE dni = ?;'
-    db_empleados = run_query(query, (registerParameters[2],))
+    db_empleados = run_query(query, (empleadoParameters[2],))
     if db_empleados.fetchall():
         messagebox.showinfo("DNI existente","El DNI que esta intentando ingresa ya se encuentra registrado")
     else:
         query = 'INSERT into empleados VALUES(null, ?, ?, ?, 0, ?)'
-        run_query(query, registerParameters)
+        run_query(query, empleadoParameters)
     get_empleados()
 
 def get_empleados():
