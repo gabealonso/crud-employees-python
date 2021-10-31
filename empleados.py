@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import sqlite3
 from hashlib import sha256
 
@@ -54,7 +55,7 @@ def verifica_login():
     if db_users.fetchall():
         ingresar_pantalla_principal()
     else:
-        print("Password incorrecta")
+         messagebox.showinfo("Clave y/o usuario incorrecto","El usuario o clave que esta intentando ingresar son incorrectos")
 
 
 ## Menu principal
@@ -112,7 +113,7 @@ def registrar():
     query = 'SELECT usuario FROM usuarios_rrhh WHERE usuario = ?;'
     db_users = run_query(query, (registerParameters[0],))
     if db_users.fetchall():
-        print("Administrador existente")
+        messagebox.showinfo("Usuario registrado","El nombre de usuario ya se encuentra registrado")
     else:
         query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
         run_query(query, registerParameters)
@@ -175,7 +176,7 @@ def modificar_empleado():
         query = 'UPDATE empleados SET nombre = ?, apellido = ?, dni = ?, area = ? WHERE dni = ?'
         db_empleados = run_query(query, nuevosValores)
     else:
-        print("Empleado inexistente")
+        messagebox.showinfo("Error en la modificacion","Empleado no encontrado")
         
 
 # pantalla agregar empleados
@@ -192,18 +193,22 @@ def agregar_empleados():
     Label(ventana_agregar_empleados, text="Agregar empleado", bg=HeadingColor, width="300", height="2").pack()
         
     Label(ventana_agregar_empleados, text="Nombre ", bg=BackGroundColor).pack()
+    global entrada_nombre_empleado
     entrada_nombre_empleado = Entry(ventana_agregar_empleados)
     entrada_nombre_empleado.pack()
 
     Label(ventana_agregar_empleados, text="Apellido", bg=BackGroundColor).pack()
+    global entrada_apellido_empleado
     entrada_apellido_empleado = Entry(ventana_agregar_empleados)
     entrada_apellido_empleado.pack()
 
     Label(ventana_agregar_empleados, text="DNI", bg=BackGroundColor).pack()
+    global entrada_dni_empleado
     entrada_dni_empleado = Entry(ventana_agregar_empleados)
     entrada_dni_empleado.pack()
 
     Label(ventana_agregar_empleados, text="Area", bg=BackGroundColor).pack()
+    global entrada_area_empleado
     entrada_area_empleado = Entry(ventana_agregar_empleados)
     entrada_area_empleado.pack()
 
@@ -229,17 +234,36 @@ def agregar_empleados():
     #tv.insert(parent='', index=0, id=0, text='', values=('45','Miguel','Rodriguez', '14243531', 'Operario de CNC')) # empleado hardcodeado para mostrar
     tv.pack()
     get_empleados()
-## funcion para agregar empleados
+    
 
+
+## funcion para agregar empleados
 def agregar_empleado():
-    print("Empleado agregado")
+    NombreEmpleado = entrada_nombre_empleado.get()
+    ApellidoEmpleado = entrada_apellido_empleado.get()
+    DniEmpleado = entrada_dni_empleado.get()
+    AreaEmpleado =  entrada_area_empleado.get()
+    registerParameters = [NombreEmpleado, ApellidoEmpleado,DniEmpleado, AreaEmpleado]
+    query = 'SELECT dni FROM empleados WHERE dni = ?;'
+    db_empleados = run_query(query, (registerParameters[2],))
+    if db_empleados.fetchall():
+        messagebox.showinfo("DNI existente","El DNI que esta intentando ingresa ya se encuentra registrado")
+    else:
+        query = 'INSERT into empleados VALUES(null, ?, ?, ?, 0, ?)'
+        run_query(query, registerParameters)
+    get_empleados()
 
 def get_empleados():
+    #limpiar la tabla
+    records = tv.get_children()
+    for element in records:
+        tv.delete(element)
     #consulta    
     query = 'SELECT nombre,apellido,dni,area FROM empleados WHERE suspendido = 0 ORDER BY nombre DESC'
     db_rows  = run_query(query)
     for row in db_rows:
         tv.insert(parent='', index=0, values=(row[0], row[1],row[2],row[3]))
+
 
 
 def suspender_activar_empleados():
@@ -277,7 +301,7 @@ def desactivar():
         query = 'UPDATE empleados SET suspendido = 1 WHERE dni = ?'
         db_empleados = run_query(query, (dni_empleado,))
     else:
-        print("Empleado inexistente")
+        messagebox.showinfo("Empleado suspendido","El empleado fue suspendido correctamente")
 
 ## funcion para activar empleado
 
@@ -291,6 +315,6 @@ def activar():
         query = 'UPDATE empleados SET suspendido = 0 WHERE dni = ?'
         db_empleados = run_query(query, (dni_empleado,))
     else:
-        print("Empleado inexistente")
+        messagebox.showinfo("Empleado activado","El empleado fue activado correctamente")
 
 app()
