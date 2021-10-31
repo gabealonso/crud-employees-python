@@ -117,6 +117,7 @@ def registrar():
     else:
         query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
         run_query(query, registerParameters)
+        messagebox.showinfo("Registro exitoso","El usuario Fue registrado correctamente")
 
 ## pantalla modificar empleados
 
@@ -175,6 +176,7 @@ def modificar_empleado():
         # modificacion de empleado
         query = 'UPDATE empleados SET nombre = ?, apellido = ?, dni = ?, area = ? WHERE dni = ?'
         db_empleados = run_query(query, nuevosValores)
+        messagebox.showinfo("Modificado exitosamente","El empleado se ha modificado correctamente")
     else:
         messagebox.showinfo("Error en la modificacion","Empleado no encontrado")
         
@@ -300,8 +302,9 @@ def desactivar():
         # suspension del empleado
         query = 'UPDATE empleados SET suspendido = 1 WHERE dni = ?'
         db_empleados = run_query(query, (dni_empleado,))
+        messagebox.showinfo("Empleado suspendido correctamente","El empleado ya fue suspendido correctamente")
     else:
-        messagebox.showinfo("Empleado suspendido","El empleado fue suspendido correctamente")
+        messagebox.showinfo("Empleado ya suspendido","El empleado ya se encuentra suspendido")
 
 ## funcion para activar empleado
 
@@ -314,7 +317,8 @@ def activar():
         # activacion del empleado
         query = 'UPDATE empleados SET suspendido = 0 WHERE dni = ?'
         db_empleados = run_query(query, (dni_empleado,))
+        messagebox.showinfo("Empleado activo","El empleado se activo correctamente")
     else:
-        messagebox.showinfo("Empleado activado","El empleado fue activado correctamente")
+        messagebox.showinfo("Empleado activo","El empleado ya se encuentra activo")
 
 app()
