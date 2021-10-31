@@ -124,6 +124,7 @@ def registrar():
     userNuevo = entrada_registro_usuario.get()
     passwordNueva = entrada_registro_clave.get()
     registerParameters = [userNuevo, sha256(passwordNueva.encode('utf-8')).hexdigest()]
+    print(registerParameters)
     if (registerParameters[0] != '' and registerParameters[1] != ''):
         query = 'SELECT usuario FROM usuarios_rrhh WHERE usuario = ?;'
         db_users = run_query(query, (registerParameters[0],))
