@@ -58,6 +58,7 @@ def app():
     Button(ventana_login, text="Acceder", width=10, height=1, bg=ColorBotones, command = verifica_login).pack()
     ventana_login.mainloop()
 
+## verificar login
 
 def verifica_login():
     user = entrada_login_usuario.get()
@@ -195,7 +196,7 @@ def modificar_empleado():
         query = 'SELECT dni FROM empleados WHERE dni = ?'
         db_empleados = run_query(query, (dni_empleado,))
         if db_empleados.fetchall():
-        # modificacion de empleado
+            # modificacion de empleado
             query = 'UPDATE empleados SET nombre = ?, apellido = ?, dni = ?, area = ? WHERE dni = ?'
             db_empleados = run_query(query, nuevosValores)
             messagebox.showinfo("Modificado exitosamente","El empleado se ha modificado correctamente")
@@ -244,26 +245,23 @@ def agregar_empleados():
     tv = ttk.Treeview(ventana_agregar_empleados)
     tv['columns']=('Nombre', 'Apellido', 'DNI', 'Area')
     tv.column('#0', width=0, stretch=NO)
-    #tv.column('ID', anchor=CENTER, width=80)
     tv.column('Nombre', anchor=CENTER, width=80)
     tv.column('Apellido', anchor=CENTER, width=80)
     tv.column('DNI', anchor=CENTER, width=120)
     tv.column('Area', anchor=CENTER, width=120)
 
     tv.heading('#0', text='', anchor=CENTER)
-    #tv.heading('ID', text='ID', anchor=CENTER)
     tv.heading('Nombre', text='Nombre', anchor=CENTER)
     tv.heading('Apellido', text='Apellido', anchor=CENTER)
     tv.heading('DNI', text='DNI', anchor=CENTER)
     tv.heading('Area', text='Area', anchor=CENTER)
 
-    #tv.insert(parent='', index=0, id=0, text='', values=('45','Miguel','Rodriguez', '14243531', 'Operario de CNC')) # empleado hardcodeado para mostrar
     tv.pack()
     get_empleados()
-    
 
 
 ## funcion para agregar empleados
+
 def agregar_empleado():
     NombreEmpleado = entrada_nombre_empleado.get()
     ApellidoEmpleado = entrada_apellido_empleado.get()
@@ -275,7 +273,6 @@ def agregar_empleado():
     query = 'SELECT dni FROM empleados WHERE dni = ?;'
     db_empleados = run_query(query, (empleadoParameters[2],))
     if(empleadoParameters[0] != '' and empleadoParameters[1] != '' and empleadoParameters[2] != '' and empleadoParameters[3] != ''):
-
         if db_empleados.fetchall():
             messagebox.showinfo("DNI existente","El DNI que esta intentando ingresa ya se encuentra registrado")
         else:
@@ -286,17 +283,17 @@ def agregar_empleado():
         messagebox.showinfo("Campos requeridos","Todos los campos son requeridos")
 
 def get_empleados():
-    #limpiar la tabla
+    # limpiar la tabla
     records = tv.get_children()
     for element in records:
         tv.delete(element)
-    #consulta    
+    # consulta    
     query = 'SELECT nombre,apellido,dni,area FROM empleados WHERE suspendido = 0 ORDER BY nombre DESC'
     db_rows  = run_query(query)
     for row in db_rows:
         tv.insert(parent='', index=0, values=(row[0], row[1],row[2],row[3]))
 
-
+## pantalla activar/desactivar empleados
 
 def suspender_activar_empleados():
     global ventana_suspender_activar_empleados
@@ -338,6 +335,7 @@ def desactivar():
             messagebox.showinfo("Empleado no encontrado", "DNI invalido")
     else:
         messagebox.showinfo("Campos requeridos","Todos los campos son requeridos")
+
 ## funcion para activar empleado
 
 def activar():
