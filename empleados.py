@@ -63,10 +63,13 @@ def verifica_login():
     login = [user, sha256(password.encode('utf-8')).hexdigest()]
     query = 'SELECT usuario, clave FROM usuarios_rrhh WHERE usuario = ? AND clave = ?;'
     db_users = run_query(query, login)
-    if db_users.fetchall():
-        ingresar_pantalla_principal()
+    if(login[0] != '' and login[1] != ''):
+        if db_users.fetchall():
+            ingresar_pantalla_principal()
+        else:
+             messagebox.showinfo("Clave y/o usuario incorrecto","El usuario o clave que esta intentando ingresar son incorrectos")
     else:
-         messagebox.showinfo("Clave y/o usuario incorrecto","El usuario o clave que esta intentando ingresar son incorrectos")
+       messagebox.showinfo("Campos requeridos","Todos los campos son requeridos")
 
 
 ## Menu principal
@@ -121,14 +124,17 @@ def registrar():
     userNuevo = entrada_registro_usuario.get()
     passwordNueva = entrada_registro_clave.get()
     registerParameters = [userNuevo, sha256(passwordNueva.encode('utf-8')).hexdigest()]
-    query = 'SELECT usuario FROM usuarios_rrhh WHERE usuario = ?;'
-    db_users = run_query(query, (registerParameters[0],))
-    if db_users.fetchall():
-        messagebox.showinfo("Usuario registrado","El nombre de usuario ya se encuentra registrado")
+    if (registerParameters[0] != '' and registerParameters[1] != ''):
+        query = 'SELECT usuario FROM usuarios_rrhh WHERE usuario = ?;'
+        db_users = run_query(query, (registerParameters[0],))
+        if db_users.fetchall():
+            messagebox.showinfo("Usuario registrado","El nombre de usuario ya se encuentra registrado")
+        else:
+            query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
+            run_query(query, registerParameters)
+            messagebox.showinfo("Registro exitoso","El usuario fue registrado correctamente")
     else:
-        query = 'INSERT INTO usuarios_rrhh VALUES(NULL, ?, ?)'
-        run_query(query, registerParameters)
-        messagebox.showinfo("Registro exitoso","El usuario Fue registrado correctamente")
+        messagebox.showinfo("Campos requeridos","Todos los campos son requeridos")
 
 ## pantalla modificar empleados
 
@@ -181,15 +187,18 @@ def modificar_empleado():
     area = entrada_area_empleado.get()
     nuevosValores = [nombre, apellido, dni_nuevo, area, dni_empleado]
     # validacion dni empleado
-    query = 'SELECT dni FROM empleados WHERE dni = ?'
-    db_empleados = run_query(query, (dni_empleado,))
-    if db_empleados.fetchall():
+    if(nuevosValores[0] != '' and nuevosValores[1] != '' and nuevosValores[2] != '' and nuevosValores[3] != '' ):
+        query = 'SELECT dni FROM empleados WHERE dni = ?'
+        db_empleados = run_query(query, (dni_empleado,))
+        if db_empleados.fetchall():
         # modificacion de empleado
-        query = 'UPDATE empleados SET nombre = ?, apellido = ?, dni = ?, area = ? WHERE dni = ?'
-        db_empleados = run_query(query, nuevosValores)
-        messagebox.showinfo("Modificado exitosamente","El empleado se ha modificado correctamente")
+            query = 'UPDATE empleados SET nombre = ?, apellido = ?, dni = ?, area = ? WHERE dni = ?'
+            db_empleados = run_query(query, nuevosValores)
+            messagebox.showinfo("Modificado exitosamente","El empleado se ha modificado correctamente")
+        else:
+            messagebox.showinfo("Error en la modificacion","Empleado no encontrado")
     else:
-        messagebox.showinfo("Error en la modificacion","Empleado no encontrado")
+        messagebox.showinfo("Campos requeridos","Todos los campos son requeridos")
         
 
 # pantalla agregar empleados
@@ -261,12 +270,16 @@ def agregar_empleado():
     empleadoParameters = [empleadoClase.nombre, empleadoClase.apellido, empleadoClase.dni, empleadoClase.area]
     query = 'SELECT dni FROM empleados WHERE dni = ?;'
     db_empleados = run_query(query, (empleadoParameters[2],))
-    if db_empleados.fetchall():
-        messagebox.showinfo("DNI existente","El DNI que esta intentando ingresa ya se encuentra registrado")
+    if(empleadoParameters[0] != '' and empleadoParameters[1] != '' and empleadoParameters[2] != '' and empleadoParameters[3] != ''):
+
+        if db_empleados.fetchall():
+            messagebox.showinfo("DNI existente","El DNI que esta intentando ingresa ya se encuentra registrado")
+        else:
+            query = 'INSERT into empleados VALUES(null, ?, ?, ?, 0, ?)'
+            run_query(query, empleadoParameters)
+        get_empleados()
     else:
-        query = 'INSERT into empleados VALUES(null, ?, ?, ?, 0, ?)'
-        run_query(query, empleadoParameters)
-    get_empleados()
+        messagebox.showinfo("Campos requeridos","Todos los campos son requeridos")
 
 def get_empleados():
     #limpiar la tabla
@@ -311,14 +324,16 @@ def desactivar():
     # validacion dni empleado
     query = 'SELECT dni FROM empleados WHERE dni = ?'
     db_empleados = run_query(query, (dni_empleado,))
-    if db_empleados.fetchall():
+    if (dni_empleado != ''):
+        if db_empleados.fetchall():
         # suspension del empleado
-        query = 'UPDATE empleados SET suspendido = 1 WHERE dni = ?'
-        db_empleados = run_query(query, (dni_empleado,))
-        messagebox.showinfo("Empleado suspendido correctamente", "El empleado ya fue suspendido correctamente")
+            query = 'UPDATE empleados SET suspendido = 1 WHERE dni = ?'
+            db_empleados = run_query(query, (dni_empleado,))
+            messagebox.showinfo("Empleado suspendido correctamente", "El empleado ya fue suspendido correctamente")
+        else:
+            messagebox.showinfo("Empleado no encontrado", "DNI invalido")
     else:
-        messagebox.showinfo("Empleado no encontrado", "DNI invalido")
-
+        messagebox.showinfo("Campos requeridos","Todos los campos son requeridos")
 ## funcion para activar empleado
 
 def activar():
@@ -326,12 +341,15 @@ def activar():
     # validacion id empleado
     query = 'SELECT dni FROM empleados WHERE dni = ?'
     db_empleados = run_query(query, (dni_empleado,))
-    if db_empleados.fetchall():
+    if(dni_empleado != ''):
+        if db_empleados.fetchall():
         # activacion del empleado
-        query = 'UPDATE empleados SET suspendido = 0 WHERE dni = ?'
-        db_empleados = run_query(query, (dni_empleado,))
-        messagebox.showinfo("Empleado activo", "El empleado se activo correctamente")
+            query = 'UPDATE empleados SET suspendido = 0 WHERE dni = ?'
+            db_empleados = run_query(query, (dni_empleado,))
+            messagebox.showinfo("Empleado activo", "El empleado se activo correctamente")
+        else:
+            messagebox.showinfo("Empleado no encontrado", "DNI invalido")
     else:
-        messagebox.showinfo("Empleado no encontrado", "DNI invalido")
+        messagebox.showinfo("Campos requeridos","Todos los campos son requeridos")
 
 app()
